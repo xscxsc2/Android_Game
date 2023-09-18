@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameList extends AppCompatActivity {
+    private static final String TAG = "GameList";
     public static GameList instance;
     private ListView listView = null;
     private String[] names = null;
@@ -38,9 +39,16 @@ public class GameList extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(GameList.this, Game.class);
-                MainActivity.instance.finish();
-                startActivity(intent);
+                if (i == 0){
+                    Intent intent = new Intent(GameList.this, Game.class);
+                    MainActivity.instance.finish();
+                    startActivity(intent);
+                } else if (i == 1) {
+                    Intent intent = new Intent(GameList.this, ElfkfMainActivity.class);
+                    MainActivity.instance.finish();
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -64,5 +72,25 @@ public class GameList extends AppCompatActivity {
 
             gameList.add(item);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        String[] newNames = getResources().getStringArray(R.array.gameName2);
+        String[] newInfos = getResources().getStringArray(R.array.gameInfo2);
+        TypedArray newImages = getResources().obtainTypedArray(R.array.gameList_Image2);
+
+        int newLen = newNames.length;
+        for(int i = 0; i < newLen; i ++){
+            GameListItem newItem = new GameListItem();
+            newItem.SetItemId(len + i);
+            newItem.SetImageId(newImages.getResourceId(i,0));
+            newItem.SetGameName(newNames[i]);
+            newItem.SetGameInfo(newInfos[i]);
+            gameList.add(newItem);
+        }
+
     }
+
+
+
+
 }
